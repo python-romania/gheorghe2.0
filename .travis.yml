@@ -5,9 +5,9 @@ python:
 # command to install dependencies
 install:
     - pip install -r requirements.txt
-    - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux64.tar.gz
+    - wget https://github.com/mozilla/geckodriver/releases/download/v0.24.0/geckodriver-v0.24.0-linux32.tar.gz
     - mkdir bin
-    - tar -xzf geckodriver-v0.24.0-linux64.tar.gz -C bin
+    - tar -xzf geckodriver-v0.24.0-linux32.tar.gz -C bin
     - export PATH=$(pwd)/bin:$PATH
 
 # command to run tests
