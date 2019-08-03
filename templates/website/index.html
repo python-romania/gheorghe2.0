@@ -1,0 +1,41 @@
+{% extends "website/base.html" %}
+
+{% block title %}Python Study Group{% endblock %}
+
+{% block content %}
+
+<div class="row">
+
+    <div class="offset-md-2 col-md-8 pt-5">
+        <div class="media">
+            <img src={{ url_for('static', filename='icons/logo.jpeg') }} class="mr-3" alt="logo">
+            <div class="media-body">
+                <h3 class="mt-0">Python Study Group</h3>
+                <p>Welcome to the Python Study Group community!
+                We are a growing and inclusive community of Python enthusiasts ranging from those
+                just starting to those who have built their entire career around it.
+                Our community has a range of resources from our main presence on Slack to our community
+                projects
+                </p>
+                <h4 class="mt-0">Our Mission</h4>
+                <p>Our mission is to create a create a friendly community where everyone can share from
+                his experience with Python. Within this community new learnes can find resources and help
+                from our more experienced members. Besides resources and support we would like to provide
+                a way to find an acountability budy in your learning process.</p>
+                <h4 class="mt-0">Join the Community!</h4>
+                <button id="slack-btn" type="button" class="btn btn-lg btn-dark">
+                    <i class="fab fa-slack">
+                        <a href="https://join.slack.com/t/pythonromania/shared_invite/enQtNjY2ODg1NzY1NzYxLWEwYzNkMTk1MjQ5NWU0ZjlkMDA2YjM2NTEyM2FmZDMyNzNiNDA3YmFiMmY2NzVlMTUzZjQyN2UyMDdiYzY1NTY">Slack</a>
+                    </i>
+                </button>
+                <button id="github-btn" type="button" class="btn btn-lg btn-dark">
+                    <i class="fab fa-github">
+                        <a href="https://github.com/python-romania">Github</a>
+                    </i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
