@@ -8,7 +8,14 @@ import os
 import json
 
 # Third party imports
+import slack
 from flask import Blueprint, request, make_response
+
+# Local imports
+from . import handler
+
+# Define slack web client
+web_client = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
 
 # Define blueprint
 bot_app = Blueprint("bot_app", __name__)
@@ -34,6 +41,7 @@ def listening():
 
     # Check for any event
     if "event" in slack_event:
-        print(slack_event)
+        if slack_event["event"]["type"] == "team_join":
+            return make_response("Team join event.", 200, {"X-Slack-No-Retry": 1})
 
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})

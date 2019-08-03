@@ -1,13 +1,18 @@
 """
-test_bot.py
+test_events.py
 
-Holds the bot app tests.
+Test events received from slack.
 """
 # Standard lib imports
+import os
 import json
 
 # Third party imports
 from flask.testing import FlaskClient
+from dotenv import load_dotenv
+
+# Load env
+load_dotenv()
 
 def test_challenge_response(client_fixture: FlaskClient) -> None:
     """ Test connection response. """
@@ -26,3 +31,14 @@ def test_verification(client_fixture: FlaskClient) -> None:
             data=json.dumps(data),
             content_type="application/json")
     assert response.status == "403 FORBIDDEN"
+
+def test_onboarding_event(client_fixture: FlaskClient) -> None:
+    """ Test team_join event. """
+    data = {"token":os.getenv("VERIFICATION"),
+            "event":{"type": "team_join"}}
+
+    response = client_fixture.post(path="/slack",
+            data=json.dumps(data),
+            content_type="application/json")
+    assert response.status == "200 OK"
+
