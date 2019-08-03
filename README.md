@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/python-romania/gheorghe2.0.svg?branch=master)](https://travis-ci.org/python-romania/gheorghe2.0)
+[![Build Status](https://travis-ci.org/python-romania/gheorghe2.0.svg?branch=master)](https://travis-ci.org/python-romania/gheorghe2.0)![GitHub](https://img.shields.io/github/license/python-romania/website)
 
 # Pyton Romania Study Group
 
