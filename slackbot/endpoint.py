@@ -67,9 +67,11 @@ def hello():
 
     if command["user_name"]:
         message = f"Hello {command['user_name']}"
-        response = {"response_type": "in_channel","text": message}
+        response = {"response_type": "in_channel","text": message,}
         data = json.dumps(response)
-        content_type = "application/json"
-        return make_response(data, 200, {"X-Slack-No-Retry": 1}, content_type)
+
+        content_type = { "Content-Type":"application/json"}
+
+        return make_response(data, 200, content_type)
 
     return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
