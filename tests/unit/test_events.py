@@ -6,10 +6,15 @@ Test events received from slack.
 # Standard lib imports
 import os
 import json
+from unittest.mock import MagicMock, patch
 
 # Third party imports
+import slack
 from flask.testing import FlaskClient
 from dotenv import load_dotenv
+
+# Local imports
+from slackbot import endpoint
 
 # Load env
 load_dotenv()
@@ -32,7 +37,8 @@ def test_verification(client_fixture: FlaskClient) -> None:
             content_type="application/json")
     assert response.status == "403 FORBIDDEN"
 
-def test_onboarding_event(client_fixture: FlaskClient) -> None:
+@patch("slackbot.endpoint.web_client", spec=True)
+def test_onboarding_event(fake_web_client, client_fixture: FlaskClient) -> None:
     """ Test team_join event. """
     data = {"token":os.getenv("VERIFICATION"),
             "event":{"type": "team_join",
@@ -41,8 +47,11 @@ def test_onboarding_event(client_fixture: FlaskClient) -> None:
                 }
             }
 
+    # Set fake response
+    fake_response = {"ok": True, "ts": 0}
+    fake_web_client.chat_postMessage.return_value = fake_response
+
     response = client_fixture.post(path="/slack",
             data=json.dumps(data),
             content_type="application/json")
     assert response.status == "200 OK"
-
