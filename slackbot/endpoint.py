@@ -61,11 +61,15 @@ def hello():
     command = request.form
     message = "Hello world!"
 
+
     if command.get("token") != os.getenv("VERIFICATION"):
         return make_response(message, 403, {"X-Slack-No-Retry": 1})
 
     if command["user_name"]:
         message = f"Hello {command['user_name']}"
-        return make_response(message, 200, {"X-Slack-No-Retry": 1})
+        response = {"response_type": "in_channel","text": message}
+        data = json.dumps(response)
+        content_type = "application/json"
+        return make_response(data, 200, {"X-Slack-No-Retry": 1}, content_type)
 
     return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
