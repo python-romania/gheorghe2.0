@@ -35,7 +35,11 @@ def test_verification(client_fixture: FlaskClient) -> None:
 def test_onboarding_event(client_fixture: FlaskClient) -> None:
     """ Test team_join event. """
     data = {"token":os.getenv("VERIFICATION"),
-            "event":{"type": "team_join"}}
+            "event":{"type": "team_join",
+                "user": "UFY99RRNU",
+                "channel": "GKZ71F9DW",
+                }
+            }
 
     response = client_fixture.post(path="/slack",
             data=json.dumps(data),

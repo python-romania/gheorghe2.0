@@ -49,7 +49,7 @@ def listening():
             if response["ok"]:
                 return make_response("Team join event.", 200, {"X-Slack-No-Retry": 1})
 
-        return make_response("Bad response.", 403, {"X-Slack-No-Retry": 1})
+        return make_response("Bad response from team_join event.", 404, {"X-Slack-No-Retry": 1})
 
 
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
