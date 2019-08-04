@@ -42,6 +42,14 @@ def listening():
     # Check for any event
     if "event" in slack_event:
         if slack_event["event"]["type"] == "team_join":
-            return make_response("Team join event.", 200, {"X-Slack-No-Retry": 1})
+            user = slack_event["event"]["user"]
+            channel = slack_event["event"]["channel"]
+
+            response = handler.start_onboarding(web_client, user, channel)
+            if response["ok"]:
+                return make_response("Team join event.", 200, {"X-Slack-No-Retry": 1})
+
+        return make_response("Bad response.", 403, {"X-Slack-No-Retry": 1})
+
 
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})

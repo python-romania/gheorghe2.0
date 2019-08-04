@@ -1,0 +1,22 @@
+
+*Ce este acest grup?*
+
+Acest grup se vrea a fi un grup de studiu, un loc in care poti gasi oameni pasionati de Python,
+pregatiti sa te ajute sa inveti o librarie noua sau sa descoperi mai multe despre Python.
+In acest grup formam echipe, studiem impreuna, urmarim progresul fiecaruia si nu in ultimul
+rand avem parte de distractie 'codata'.
+
+*Ce beneficii am daca sunt in acest grup?*
+
+Cunosti oameni noi pasionati de acelasi lucru ca si tine. Gasesti mentori care te pot ajuta cu
+sfaturi si raspunsuri in procesul de studiu. Iti imbunatatesti abilitatile de programator"
+prin code review, citind codul scris de ceilalti membri. Participi la proiectele propuse in cadrul grupului.
+
+*Cum functioneaza acest grup?*
+
+Acesta este un grup de slack. In acest grup toate activitatile sunt impartite pe canale de comunicare.
+Urmatoarele canale au fost create, fiecare dintre ele avand un scop clar definit.
+
+1. *#general* -> Canal public, generalitati si curiozitati
+2. *#code-review* -> Ai un cod, o problema si ai nevoie de ajutor, un sfat? Posteaza aici.
+3. *#resurse* -> Ai gasit un site misto cu tutoriale? Sau o carte, un video? Posteaza aici.
