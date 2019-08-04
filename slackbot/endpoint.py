@@ -20,6 +20,7 @@ web_client = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
 # Define blueprint
 bot_app = Blueprint("bot_app", __name__)
 
+
 @bot_app.route("/slack", methods=["GET", "POST"])
 def listening():
     """ Listening for envents coming form slack. """
@@ -53,3 +54,18 @@ def listening():
 
 
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
+
+@bot_app.route("/slack/hello", methods=["POST"])
+def hello():
+    """ /hello command. Say hello to gheorghe. """
+    command = request.form
+    message = "Hello world!"
+
+    if command.get("token") != os.getenv("VERIFICATION"):
+        return make_response(message, 403, {"X-Slack-No-Retry": 1})
+
+    if command["user_name"]:
+        message = f"Hello {command['user_name']}"
+        return make_response(message, 200, {"X-Slack-No-Retry": 1})
+
+    return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
