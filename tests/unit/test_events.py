@@ -37,7 +37,7 @@ def test_verification(client_fixture: FlaskClient) -> None:
             content_type="application/json")
     assert response.status == "403 FORBIDDEN"
 
-@patch("slackbot.endpoint.web_client", spec=True)
+@patch("slackbot.endpoint.WEB_CLIENT", spec=True)
 def test_onboarding_event(fake_web_client, client_fixture: FlaskClient) -> None:
     """ Test team_join event. """
     data = {"token":os.getenv("VERIFICATION"),
