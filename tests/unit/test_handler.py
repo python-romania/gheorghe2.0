@@ -18,12 +18,14 @@ from slackbot import handler
 # Load environments
 load_dotenv()
 
+
 @pytest.fixture
 def web_client_fixture() -> slack.WebClient:
     """ WebClient setup. """
     token = os.getenv("SLACK_BOT_TOKEN")
     web_client = slack.WebClient(token)
     yield web_client
+
 
 @patch("slack.WebClient", spec=True)
 def test_message_handler(fake_web_client: MagicMock) -> None:
@@ -39,6 +41,7 @@ def test_message_handler(fake_web_client: MagicMock) -> None:
 
     response = handler.message_handler(fake_web_client, channel, user_id, text)
     assert response["ok"]
+
 
 @patch("slack.WebClient", spec=True)
 def test_onboarding_handler(fake_web_client: MagicMock) -> None:

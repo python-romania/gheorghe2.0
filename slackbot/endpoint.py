@@ -23,6 +23,7 @@ WEB_CLIENT = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
 # Define blueprint
 bot_app = Blueprint("bot_app", __name__)
 
+
 # Compute Signing
 def verify_signing(body: str) -> str:
     """ Veryfiy the Slack Signing Secret Key """
@@ -43,6 +44,7 @@ def verify_signing(body: str) -> str:
     my_signiture = "v0=" + hmac.new(slack_signing_secret, sig_basestring, hashlib.sha256).hexdigest()
 
     return my_signiture
+
 
 @bot_app.route("/slack", methods=["GET", "POST"])
 def listening():
@@ -74,6 +76,7 @@ def listening():
         return make_response("Bad response from team_join event.", 404, {"X-Slack-No-Retry": 1})
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
 
+
 # Implementing a test command.
 @bot_app.route("/slack/hello", methods=["POST"])
 def hello():
@@ -89,8 +92,8 @@ def hello():
 
     if data["user_name"]:
         message = f"Hello {data['user_name']}"
-        response = {"response_type": "in_channel","text": message,}
+        response = {"response_type": "in_channel", "text": message, }
         response_to_be_sent = json.dumps(response)
-        content_type = { "Content-Type":"application/json"}
+        content_type = {"Content-Type": "application/json"}
         return make_response(response_to_be_sent, 200, content_type)
     return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})

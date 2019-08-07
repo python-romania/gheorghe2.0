@@ -11,26 +11,27 @@ import json
 # Third party imports
 from flask import Flask, make_response, request
 
-def create_app(development: bool =True) -> Flask:
+
+def create_app(development: bool = True) -> Flask:
     """ Application factory """
 
-    app = Flask(__name__)
+    flask_app = Flask(__name__)
 
     # Load configurations
     if development:
-        app.config.from_object("config.DevelopmentConfig")
+        flask_app.config.from_object("config.DevelopmentConfig")
     else:
-        app.config.from_object("config.ProductionConfig")
+        flask_app.config.from_object("config.ProductionConfig")
 
     # Import blueprints
     from website.views import main_app
     from slackbot.endpoint import bot_app
 
     # Register blueprints
-    app.register_blueprint(main_app)
-    app.register_blueprint(bot_app)
+    flask_app.register_blueprint(main_app)
+    flask_app.register_blueprint(bot_app)
 
-    return app
+    return flask_app
 
 
 if __name__ == "__main__":

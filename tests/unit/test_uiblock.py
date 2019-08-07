@@ -5,6 +5,7 @@ Contains the test for uiblock module.
 """
 from slackbot import uiblock
 
+
 def test_message_block() -> None:
     """ Test the message block. """
     channel = "GKZ71F9DW"
@@ -21,6 +22,7 @@ def test_message_block() -> None:
 
     payload = message_block.get_message_payload()
     assert type(payload) == dict
+
 
 def test_onboarding_block() -> None:
     """ Test the onboarding ui block. """
@@ -39,4 +41,3 @@ def test_onboarding_block() -> None:
     assert type(payload) == dict
     assert "Salutare" in payload["blocks"][0]["text"]["text"]
     assert "grup" in payload["blocks"][2]["text"]["text"]
-

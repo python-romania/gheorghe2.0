@@ -9,6 +9,7 @@ DS_Store
 
 # Distribution / packaging
 .Python
+.idea
 build/
 develop-eggs/
 dist/

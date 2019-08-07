@@ -6,6 +6,7 @@ Holds configuration for different development environments.
 # Standard imports
 import os
 
+
 # Base class configuration
 class BaseConfig:
     """
@@ -14,6 +15,7 @@ class BaseConfig:
     """
     SECRET_KEY = os.getenv("SECRET_KEY")
 
+
 # Production configuration
 class ProductionConfig(BaseConfig):
     """
@@ -21,6 +23,7 @@ class ProductionConfig(BaseConfig):
     for production environment.
     """
     pass
+
 
 # Development configuration
 class DevelopmentConfig(BaseConfig):
