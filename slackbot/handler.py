@@ -12,11 +12,10 @@ from typing import Optional
 import slack
 
 # Local imports
-from .uiblock import Message, OnboardingMessage
+from slackbot.uiblock import Message, OnboardingMessage
 
 # In memory storage
 ONBOARDING_MESSAGE_LOG: dict = {}
-
 
 def start_onboarding(web_client: slack.WebClient, new_user_id: str, channel: str) -> dict:
     """ Send onboarding message. """

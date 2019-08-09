@@ -43,12 +43,12 @@ class Message:
     def _get_message_block(self) -> dict:
         """ Return message block. """
         message = {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": self.text,
-                    }
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": self.text,
                 }
+            }
         return message
 
 class OnboardingMessage:

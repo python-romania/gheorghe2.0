@@ -8,13 +8,8 @@ Main file. Contains application factory along with the
 installed extensions.
 """
 
-# Standard imports
-import os
-import json
-
 # Third party imports
-from flask import Flask, make_response, request
-
+from flask import Flask
 
 def create_app(development: bool = True) -> Flask:
     """ Application factory """

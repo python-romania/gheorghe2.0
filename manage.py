@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pyling: disable=invalid-name
+# pylint: disable=invalid-name
 """
 manage.py
 Entrypoint of the app.

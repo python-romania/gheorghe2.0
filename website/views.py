@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 views.py
 

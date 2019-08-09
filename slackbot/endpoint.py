@@ -16,7 +16,7 @@ import slack
 from flask import Blueprint, request, make_response
 
 # Local imports
-from . import handler
+from slackbot import handler
 
 # Define slack web client
 WEB_CLIENT = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
