@@ -14,7 +14,7 @@ from flask import Flask
 from app import create_app
 
 @pytest.fixture()
-def client_fixture(scope="module") -> Flask:
+def client(scope="module") -> Flask:
     """ App instance setup. """
     app = create_app()
     with app.test_client() as client:

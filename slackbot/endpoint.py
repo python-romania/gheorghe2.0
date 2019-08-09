@@ -82,22 +82,6 @@ def listening():
         return make_response("Bad response from team_join event.", 404, {"X-Slack-No-Retry": 1})
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
 
-
-# Implementing a hello command.
-@BOT_APP.route("/slack/hello", methods=["POST"])
-def hello():
-    """ /hello command. Say hello to gheorghe. """
-    data = request.get_data(as_text=True)
-
-    if verify_signing(data):
-        if request.form["user_name"]:
-            message = f"Hello {request.form['user_name']}"
-            response = {"response_type": "in_channel", "text": message, }
-            response_to_be_sent = json.dumps(response)
-            content_type = {"Content-Type": "application/json"}
-            return make_response(response_to_be_sent, 200, content_type)
-    return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
-
 # A simple text command used for experimenting.
 @BOT_APP.route("/slack/test", methods=["POST"])
 def test() -> None:
