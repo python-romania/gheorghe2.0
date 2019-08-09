@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 handler.py
-
 Contains all the event handlers.
 """
+
 # Standard lib imports
 from typing import Optional
 

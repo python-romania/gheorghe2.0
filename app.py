@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 """
 app.py
 
 Main file. Contains application factory along with the
 installed extensions.
 """
+
 # Standard imports
 import os
 import json
@@ -25,11 +29,11 @@ def create_app(development: bool = True) -> Flask:
 
     # Import blueprints
     from website.views import main_app
-    from slackbot.endpoint import bot_app
+    from slackbot.endpoint import BOT_APP
 
     # Register blueprints
     flask_app.register_blueprint(main_app)
-    flask_app.register_blueprint(bot_app)
+    flask_app.register_blueprint(BOT_APP)
 
     return flask_app
 

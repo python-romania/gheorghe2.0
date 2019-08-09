@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 uiblock.py
-
 Contains the UI block for messages and responses.
 """
+
 # Standard imports
 import pathlib
 

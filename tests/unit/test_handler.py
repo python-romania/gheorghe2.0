@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 """
 test_handler.py
 
 Holds tests for events handler.
 """
+
 # Standard imports
 import os
 from unittest.mock import MagicMock, patch

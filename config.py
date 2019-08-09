@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 """
 config.py
-
-Holds configuration for different development environments. 
+Holds configuration for different development environments.
 """
+
 # Standard imports
 import os
-
 
 # Base class configuration
 class BaseConfig:
@@ -15,14 +17,12 @@ class BaseConfig:
     """
     SECRET_KEY = os.getenv("SECRET_KEY")
 
-
 # Production configuration
 class ProductionConfig(BaseConfig):
     """
     Production settings. Holds additional settings
     for production environment.
     """
-    pass
 
 
 # Development configuration

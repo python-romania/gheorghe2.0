@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+# pyling: disable=invalid-name
 """
 manage.py
-
 Entrypoint of the app.
 """
 from app import create_app

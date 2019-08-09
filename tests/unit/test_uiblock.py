@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 """
 test_uiblock.py
 
 Contains the test for uiblock module.
 """
+
 from slackbot import uiblock
 
 

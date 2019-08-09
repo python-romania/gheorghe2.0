@@ -1,6 +1,9 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 functional_test.py
 """
+
 # Third party imports
 import pytest
 from selenium import webdriver

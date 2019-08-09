@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 conftest.py
 
 Holds module fixtures.
 """
+
 # Third party imports
 import pytest
 from flask import Flask

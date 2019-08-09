@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 endpoint.py
 
@@ -5,7 +7,6 @@ Contains the slack api endpoint.
 """
 # Standard imports
 import os
-import time
 import hmac
 import json
 import hashlib
@@ -21,32 +22,37 @@ from . import handler
 WEB_CLIENT = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
 
 # Define blueprint
-bot_app = Blueprint("bot_app", __name__)
-
+BOT_APP = Blueprint("BOT_APP", __name__)
 
 # Compute Signing
-def verify_signing(body: str) -> str:
+def verify_signing(body: str) -> True:
     """ Veryfiy the Slack Signing Secret Key """
 
     # Get slack Request timestamp
-    timestamp = request.headers['X-Slack-Request-Timestamp']
+    timestamp = request.headers.get('X-Slack-Request-Timestamp')
+
+    # Get slack signiture
+    slack_signature = request.headers.get("X-Slack-Signature")
 
     # Get request body
     body = body
 
     # Build the basestring
-    sig_basestring = str.encode(f"{'v0='}:{timestamp}:{body}")
+    sig_basestring = str.encode(f"v0:{timestamp}:{body}")
 
     # Get the secret key
     slack_signing_secret = str.encode(os.getenv("SIGNING_SECRET"))
 
     # Create the hash
-    my_signiture = "v0=" + hmac.new(slack_signing_secret, sig_basestring, hashlib.sha256).hexdigest()
+    my_signiture = f"v0={hmac.new(slack_signing_secret, sig_basestring, hashlib.sha256).hexdigest()}"
 
-    return my_signiture
+    # Test Signature
+    if hmac.compare_digest(my_signiture, slack_signature):
+        return True
+    return False
 
 
-@bot_app.route("/slack", methods=["GET", "POST"])
+@BOT_APP.route("/slack", methods=["GET", "POST"])
 def listening():
     """ Listening for envents coming form slack. """
     slack_event = {}
@@ -77,23 +83,31 @@ def listening():
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
 
 
-# Implementing a test command.
-@bot_app.route("/slack/hello", methods=["POST"])
+# Implementing a hello command.
+@BOT_APP.route("/slack/hello", methods=["POST"])
 def hello():
     """ /hello command. Say hello to gheorghe. """
-    data = request.form
-    message = "Hello world!"
+    data = request.get_data(as_text=True)
 
-    # TODO: Fix my_signiture hash.
-    # This is always returns false when compare with slack signiture
-    my_signiture = verify_signing(request.get_data(as_text=True))
-    print(hmac.compare_digest(my_signiture, request.headers["X-Slack-Signature"]))
-    # Prints: False
+    if verify_signing(data):
+        if request.form["user_name"]:
+            message = f"Hello {request.form['user_name']}"
+            response = {"response_type": "in_channel", "text": message, }
+            response_to_be_sent = json.dumps(response)
+            content_type = {"Content-Type": "application/json"}
+            return make_response(response_to_be_sent, 200, content_type)
+    return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
 
-    if data["user_name"]:
-        message = f"Hello {data['user_name']}"
+# A simple text command used for experimenting.
+@BOT_APP.route("/slack/test", methods=["POST"])
+def test() -> None:
+    """ Simple Test command. """
+    data = request.get_data(as_text=True)
+    content_type = {"Content-Type": "application/json"}
+
+    if verify_signing(data):
+        message = "This is a simple test!"
         response = {"response_type": "in_channel", "text": message, }
         response_to_be_sent = json.dumps(response)
-        content_type = {"Content-Type": "application/json"}
         return make_response(response_to_be_sent, 200, content_type)
-    return make_response("I'm sorry. I don't understand.", 200, {"X-Slack-No-Retry": 1})
+    return make_response("Error!", 200, content_type)

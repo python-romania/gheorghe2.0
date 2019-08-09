@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
+
 """
 test_website.py
 """
+
 # Third party imports
 from flask.testing import FlaskClient
 
