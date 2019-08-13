@@ -47,12 +47,22 @@ def test_verify_signing() -> None:
 @patch("slackbot.endpoint.WEB_CLIENT", spec=True)
 def test_onboarding_event(fake_web_client: MagicMock, client: FlaskClient) -> None:
     """ Test team_join event. """
-    data = {"token": os.getenv("VERIFICATION"),
-            "event": {"type": "team_join", "user": "UFY99RRNU", "channel": "GKZ71F9DW",}
-            }
+    # Set data
+    data = {"event": {"type": "team_join", "user": "UFY99RRNU", "channel": "GKZ71F9DW",}}
+
     # Set fake response
     fake_response = {"ok": True, "ts": 0}
     fake_web_client.chat_postMessage.return_value = fake_response
 
+    # Patch verify_signing function
+    with patch("slackbot.endpoint.verify_signing", lambda a: True):
+        response = client.post(path="/slack", data=json.dumps(data), content_type="application/json")
+        assert response.status == "200 OK"
+
+def test_message_event(client: FlaskClient) -> None:
+    """ Test Listen for specific messages. """
+    data = {"challenge":"challenge", "token": os.getenv("VERIFICATION"), "event": {"type": "message"}}
+
+    # Set response
     response = client.post(path="/slack", data=json.dumps(data), content_type="application/json")
     assert response.status == "200 OK"

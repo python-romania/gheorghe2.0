@@ -67,7 +67,7 @@ def listening():
         return make_response(slack_event["challenge"], 200, content_type)
 
     # Check received token
-    if slack_event.get("token") != os.getenv("VERIFICATION"):
+    if not verify_signing(request.get_data(as_text=True)):
         message = "Invalid token"
         return make_response(message, 403, {"X-Slack-No-Retry": 1})
 
