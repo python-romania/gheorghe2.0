@@ -11,7 +11,8 @@ from flask import Blueprint, render_template
 # Define blueprint
 main_app = Blueprint("main_app", __name__)
 
+
 @main_app.route("/")
 def index() -> render_template:
     """ Site home page. """
-    return render_template('website/index.html')
+    return render_template("website/index.html")

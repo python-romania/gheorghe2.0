@@ -30,26 +30,19 @@ class Message:
 
     def get_message_payload(self) -> dict:
         """ Return message payload. """
-        return {"timestamp": self.timestamp,
-                "channel": self.channel,
-                "username": self.username,
-                "icon_emoji": self.icon_emoji,
-                "blocks":[
-                    self._get_message_block(),
-                    self.DIVIDER_BLOCK,
-                    ],
-                }
+        return {
+            "timestamp": self.timestamp,
+            "channel": self.channel,
+            "username": self.username,
+            "icon_emoji": self.icon_emoji,
+            "blocks": [self._get_message_block(), self.DIVIDER_BLOCK],
+        }
 
     def _get_message_block(self) -> dict:
         """ Return message block. """
-        message = {
-            "type": "section",
-            "text": {
-                "type": "mrkdwn",
-                "text": self.text,
-                }
-            }
+        message = {"type": "section", "text": {"type": "mrkdwn", "text": self.text}}
         return message
+
 
 class OnboardingMessage:
     """
@@ -57,13 +50,7 @@ class OnboardingMessage:
     """
 
     # Message block
-    WELCOME_BLOCK = {
-        "type": "section",
-        "text": {
-            "type": "mrkdwn",
-            "text": ABOUT_GROUP,
-        }
-    }
+    WELCOME_BLOCK = {"type": "section", "text": {"type": "mrkdwn", "text": ABOUT_GROUP}}
 
     # Divider blocnk
     DIVIDER_BLOCK = {"type": "divider"}
@@ -88,17 +75,11 @@ class OnboardingMessage:
                 self._introduce_yourself_block(),
                 self.DIVIDER_BLOCK,
                 self.WELCOME_BLOCK,
-                ]
-            }
+            ],
+        }
 
     def _introduce_yourself_block(self) -> dict:
         """
         Returns introduce yourself block
         """
-        return {
-            "type": "section",
-            "text":{
-                "type": "mrkdwn",
-                "text": INTRODUCE,
-            }
-        }
+        return {"type": "section", "text": {"type": "mrkdwn", "text": INTRODUCE}}

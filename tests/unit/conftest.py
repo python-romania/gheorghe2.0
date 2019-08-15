@@ -13,6 +13,7 @@ from flask import Flask
 # Local imports
 from app import create_app
 
+
 @pytest.fixture()
 def client(scope="module") -> Flask:
     """ App instance setup. """

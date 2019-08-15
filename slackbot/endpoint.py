@@ -29,7 +29,7 @@ def verify_signing(body: str) -> True:
     """ Veryfiy the Slack Signing Secret Key """
 
     # Get slack Request timestamp
-    timestamp = request.headers.get('X-Slack-Request-Timestamp')
+    timestamp = request.headers.get("X-Slack-Request-Timestamp")
 
     # Get slack signiture
     slack_signature = request.headers.get("X-Slack-Signature")
@@ -79,8 +79,11 @@ def listening():
             response = handler.start_onboarding(WEB_CLIENT, user, channel)
             if response["ok"]:
                 return make_response("Team join event.", 200, {"X-Slack-No-Retry": 1})
-        return make_response("Bad response from team_join event.", 404, {"X-Slack-No-Retry": 1})
+        return make_response(
+            "Bad response from team_join event.", 404, {"X-Slack-No-Retry": 1}
+        )
     return make_response("Unhandled event", 404, {"X-Slack-No-Retry": 1})
+
 
 # A simple text command used for experimenting.
 @BOT_APP.route("/slack/test", methods=["POST"])
@@ -91,7 +94,7 @@ def test() -> None:
 
     if verify_signing(data):
         message = "This is a simple test!"
-        response = {"response_type": "in_channel", "text": message, }
+        response = {"response_type": "in_channel", "text": message}
         response_to_be_sent = json.dumps(response)
         return make_response(response_to_be_sent, 200, content_type)
     return make_response("Error!", 200, content_type)

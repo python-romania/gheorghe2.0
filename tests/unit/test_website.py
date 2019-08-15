@@ -8,6 +8,7 @@ test_website.py
 # Third party imports
 from flask.testing import FlaskClient
 
+
 def test_home_page(client: FlaskClient) -> None:
     """ Test website home page. """
     response = client.get("/")

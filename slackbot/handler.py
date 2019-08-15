@@ -17,7 +17,10 @@ from slackbot.uiblock import Message, OnboardingMessage
 # In memory storage
 ONBOARDING_MESSAGE_LOG: dict = {}
 
-def start_onboarding(web_client: slack.WebClient, new_user_id: str, channel: str) -> dict:
+
+def start_onboarding(
+    web_client: slack.WebClient, new_user_id: str, channel: str
+) -> dict:
     """ Send onboarding message. """
 
     # Build the message
@@ -40,8 +43,12 @@ def start_onboarding(web_client: slack.WebClient, new_user_id: str, channel: str
     return response
 
 
-def message_handler(web_client: slack.WebClient,
-                    channel_id: str, user_id: Optional[str], text: Optional[str]) -> dict:
+def message_handler(
+    web_client: slack.WebClient,
+    channel_id: str,
+    user_id: Optional[str],
+    text: Optional[str],
+) -> dict:
     """ Send message """
 
     # Instantiate message block UI

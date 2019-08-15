@@ -11,6 +11,7 @@ installed extensions.
 # Third party imports
 from flask import Flask
 
+
 def create_app(development: bool = True) -> Flask:
     """ Application factory """
 

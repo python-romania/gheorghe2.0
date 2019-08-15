@@ -19,12 +19,16 @@ from slackbot import endpoint
 # Load env
 load_dotenv()
 
+
 def test_challenge_response(client: FlaskClient) -> None:
     """ Test connection response. """
     data = {"challenge": "challenge"}
 
-    response = client.post(path="/slack", data=json.dumps(data), content_type="application/json")
+    response = client.post(
+        path="/slack", data=json.dumps(data), content_type="application/json"
+    )
     assert response.status == "200 OK"
+
 
 # @patch("slackbot.endpoint.request", spec=True)
 def test_verify_signing() -> None:
@@ -44,11 +48,12 @@ def test_verify_signing() -> None:
     with patch("slackbot.endpoint.request", faker):
         assert endpoint.verify_signing("test")
 
+
 @patch("slackbot.endpoint.WEB_CLIENT", spec=True)
 def test_onboarding_event(fake_web_client: MagicMock, client: FlaskClient) -> None:
     """ Test team_join event. """
     # Set data
-    data = {"event": {"type": "team_join", "user": "UFY99RRNU", "channel": "GKZ71F9DW",}}
+    data = {"event": {"type": "team_join", "user": "UFY99RRNU", "channel": "GKZ71F9DW"}}
 
     # Set fake response
     fake_response = {"ok": True, "ts": 0}
@@ -56,13 +61,22 @@ def test_onboarding_event(fake_web_client: MagicMock, client: FlaskClient) -> No
 
     # Patch verify_signing function
     with patch("slackbot.endpoint.verify_signing", lambda a: True):
-        response = client.post(path="/slack", data=json.dumps(data), content_type="application/json")
+        response = client.post(
+            path="/slack", data=json.dumps(data), content_type="application/json"
+        )
         assert response.status == "200 OK"
+
 
 def test_message_event(client: FlaskClient) -> None:
     """ Test Listen for specific messages. """
-    data = {"challenge":"challenge", "token": os.getenv("VERIFICATION"), "event": {"type": "message"}}
+    data = {
+        "challenge": "challenge",
+        "token": os.getenv("VERIFICATION"),
+        "event": {"type": "message"},
+    }
 
     # Set response
-    response = client.post(path="/slack", data=json.dumps(data), content_type="application/json")
+    response = client.post(
+        path="/slack", data=json.dumps(data), content_type="application/json"
+    )
     assert response.status == "200 OK"
