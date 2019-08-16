@@ -17,6 +17,7 @@ from flask import Blueprint, request, make_response
 
 # Local imports
 from slackbot import handler
+from slackbot.rsp import Game
 
 # Define slack web client
 WEB_CLIENT = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
@@ -97,4 +98,38 @@ def test() -> None:
         response = {"response_type": "in_channel", "text": message}
         response_to_be_sent = json.dumps(response)
         return make_response(response_to_be_sent, 200, content_type)
+    return make_response("Error!", 200, content_type)
+
+@BOT_APP.route("/slack/rsp", methods=["POST"])
+def rsp() -> None:
+    """ RSP command """
+    data = request.get_data(as_text=True)
+    content_type = {"Content-Type": "application/json"}
+
+    if verify_signing(data):
+        # Request data
+        request_data = request.form.to_dict()
+
+        # Extract the user item
+        player_choice = request_data["text"].split(" ")
+
+        # Start a new game
+        game = Game(player_choice[0])
+        if not game.calculate():
+            response = {"response_type": "in_channel", "text": "Please chose a valid item if you wanna play!"}
+            return make_response(json.dumps(response), 200, content_type)
+        if game.calculate():
+            if game.player_choice == game.gheorghe_choice:
+                text = f"Nice try, it's a draw! My choice was: {game.gheorghe_choice}"
+                response = {"response_type": "in_channel", "text": text}
+                return make_response(json.dumps(response), 200, content_type)
+            elif game.gheorghe_choice in game.calculate():
+                text = f"I won! My choice was: {game.gheorghe_choice}"
+                response = {"response_type": "in_channel", "text": text}
+                return make_response(json.dumps(response), 200, content_type)
+            else:
+                text = f"You won! My choice was: {game.gheorghe_choice}"
+                response = {"response_type": "in_channel", "text": text}
+                response = {"response_type": "in_channel", "text": "You won!"}
+                return make_response(json.dumps(response), 200, content_type)
     return make_response("Error!", 200, content_type)

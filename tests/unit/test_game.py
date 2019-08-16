@@ -48,7 +48,7 @@ def test_gheorghe_choice() -> None:
     with mock.patch("random.choice", lambda seq: seq[0]):
         reload(rsp)
         game = rsp.Game("Rock")
-        assert game.gheorghe_choice == "Gun"
+        assert game.gheorghe_choice == "gun"
     reload(rsp)
 
 
@@ -56,11 +56,16 @@ def test_game_calculate(game: game) -> None:
     """ Test calculate method """
 
     # Test item not in the list
-    result = game._calculate()
-    assert not result
+    game.player_choice = "test"
+    result = game.calculate()
+    assert result is None
 
-    # Test returning next 7 items
+    # Test item is in the list and returns the next 7 items
+    game.player_choice = "Gun"
+    result = game.calculate()
+    assert type(result) == list
+    assert len(result) == 7
 
-
-def test_game_winner(game: game) -> None:
-    """ Test winner method """
+    # Test expected list
+    expected = ['lighting', 'devil', 'dragon', 'water', 'air', 'paper', 'sponge']
+    assert result == expected
