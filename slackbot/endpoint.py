@@ -94,11 +94,12 @@ def test() -> None:
     content_type = {"Content-Type": "application/json"}
 
     if verify_signing(data):
-        message = "This is a simple test!"
+        message = f"Hello {request.form.to_dict()['user_name']}!"
         response = {"response_type": "in_channel", "text": message}
         response_to_be_sent = json.dumps(response)
         return make_response(response_to_be_sent, 200, content_type)
     return make_response("Error!", 200, content_type)
+
 
 @BOT_APP.route("/slack/rsp", methods=["POST"])
 def rsp() -> None:
@@ -116,7 +117,10 @@ def rsp() -> None:
         # Start a new game
         game = Game(player_choice[0])
         if not game.calculate():
-            response = {"response_type": "in_channel", "text": "Please chose a valid item if you wanna play!"}
+            response = {
+                "response_type": "in_channel",
+                "text": "Please chose a valid item if you wanna play!",
+            }
             return make_response(json.dumps(response), 200, content_type)
         if game.calculate():
             if game.player_choice == game.gheorghe_choice:

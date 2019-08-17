@@ -17,15 +17,48 @@ from flask.testing import FlaskClient
 @patch("slackbot.endpoint.verify_signing")
 def test_test_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test test slash command. """
-    data = {"user_name": "madalin"}
+    data = "user_name=madalin&text=test text"
     fake_signing.return_value = True
-    response = client.post(path="/slack/test", data=json.dumps(data), content_type="application/json")
+    content_type = "application/x-www-form-urlencoded"
+    response = client.post(path="/slack/test", data=data, content_type=content_type)
     assert response.status == "200 OK"
+    assert "Hello madalin!" in str(response.data)
+
 
 @patch("slackbot.endpoint.verify_signing")
 def test_rsp_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test rsp slash command """
-    data = {"text": "rock"}
+    data = "text=rock"
     fake_signing.return_value = True
-    response = client.post(path="/slack/test", data=json.dumps(data), content_type="application/json")
-    assert response.status == "200 OK"
+    content_type = "application/x-www-form-urlencoded"
+
+    # Draw game
+    fgame = MagicMock()
+    fgame.return_value.player_choice = "rock"
+    fgame.return_value.gheorghe_choice = "rock"
+
+    with patch("slackbot.endpoint.Game", fgame):
+        response = client.post(path="/slack/rsp", data=data, content_type=content_type)
+        assert response.status == "200 OK"
+        assert "draw" in str(response.data)
+
+    # Player Win game
+    fgame = MagicMock()
+    fgame.return_value.player_choice = "dragon"
+    fgame.return_value.gheorghe_choice = "rock"
+
+    with patch("slackbot.endpoint.Game", fgame):
+        response = client.post(path="/slack/rsp", data=data, content_type=content_type)
+        assert response.status == "200 OK"
+        assert "You won" in str(response.data)
+
+    # Gheorghe win game
+    fgame = MagicMock()
+    fgame.return_value.player_choice = "rock"
+    fgame.return_value.gheorghe_choice = "dragon"
+    fgame.return_value.calculate.return_value = ["dragon"]
+
+    with patch("slackbot.endpoint.Game", fgame):
+        response = client.post(path="/slack/rsp", data=data, content_type=content_type)
+        assert response.status == "200 OK"
+        assert "I won" in str(response.data)
