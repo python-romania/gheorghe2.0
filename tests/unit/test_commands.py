@@ -25,7 +25,7 @@ def test_test_command(fake_signing: MagicMock, client: FlaskClient) -> None:
 @patch("slackbot.endpoint.verify_signing")
 def test_rsp_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test rsp slash command """
-    data = {}
+    data = {"text": "rock"}
     fake_signing.return_value = True
     response = client.post(path="/slack/test", data=json.dumps(data), content_type="application/json")
     assert response.status == "200 OK"

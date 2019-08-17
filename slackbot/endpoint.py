@@ -130,6 +130,5 @@ def rsp() -> None:
             else:
                 text = f"You won! My choice was: {game.gheorghe_choice}"
                 response = {"response_type": "in_channel", "text": text}
-                response = {"response_type": "in_channel", "text": "You won!"}
                 return make_response(json.dumps(response), 200, content_type)
     return make_response("Error!", 200, content_type)
