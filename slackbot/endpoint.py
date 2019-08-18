@@ -18,6 +18,8 @@ from flask import Blueprint, request, make_response
 # Local imports
 from slackbot import handler
 from slackbot.rsp import Game
+from app import db
+from slackbot.models import Score
 
 # Define slack web client
 WEB_CLIENT = slack.WebClient(os.getenv("SLACK_BOT_TOKEN"))
