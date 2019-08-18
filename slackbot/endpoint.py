@@ -136,3 +136,29 @@ def rsp() -> None:
                 response = {"response_type": "in_channel", "text": text}
                 return make_response(json.dumps(response), 200, content_type)
     return make_response("Error!", 200, content_type)
+
+
+@BOT_APP.route("/slack/items", methods=["POST"])
+def rsp_items() -> None:
+    """ RSP Items Command """
+    data = request.get_data(as_text=True)
+    content_type = {"Content-Type": "application/json"}
+
+    if verify_signing(data):
+        items = [
+            "1. *Rock*, *Gun*, *Lighting*",
+            "2. *Devil*, *Dragon*, *Water*",
+            "3, *Air*, *Paper*, *Sponge*",
+            "4. *Wolf*, *Tree*, *Human*",
+            "5. *Snake*, *Scissors*, *Fire*",
+        ]
+        message = "\n".join(items)
+        response_url = request.form.to_dict()["response_url"]
+        response = {
+            "response_type": "in_channel",
+            "text": message,
+            "response_url": response_url,
+        }
+        response_to_be_sent = json.dumps(response)
+        return make_response(response_to_be_sent, 200, content_type)
+    return make_response("Error!", 200, content_type)
