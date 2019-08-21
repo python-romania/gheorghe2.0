@@ -28,7 +28,7 @@ def test_test_command(fake_signing: MagicMock, client: FlaskClient) -> None:
 @patch("slackbot.endpoint.verify_signing")
 def test_rsp_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test rsp slash command """
-    data = "text=rock"
+    data = "user_name=madalin&text=Rock&response_url=response"
     fake_signing.return_value = True
     content_type = "application/x-www-form-urlencoded"
 
@@ -72,3 +72,12 @@ def test_list_items(fake_signing: MagicMock, client: FlaskClient) -> None:
     response = client.post(path="/slack/items", data=data, content_type=content_type)
     assert response.status == "200 OK"
     assert "Rock" in str(response.data)
+
+@patch("slackbot.endpoint.verify_signing")
+def test_score(fake_signing: MagicMock, client: FlaskClient) -> None:
+    """ Test score command """
+    data = "user_name=madalin&text=Rock&response_url=response"
+    fake_signing.return_value = True
+    content_type = "application/x-www-form-urlencoded"
+    response = client.post(path="/slack/score", data=data, content_type=content_type)
+    assert response.status == "200 OK"

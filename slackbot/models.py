@@ -21,3 +21,9 @@ class Score(db.Model):
 
     def __repr__(self):
         return f"<Score {self.username}={self.score}>"
+
+    def __lt__(self, value):
+        return self.score < value.score
+    
+    def __gt__(self, value):
+        return self.score > value.score

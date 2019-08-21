@@ -112,7 +112,13 @@ def rsp() -> None:
     if verify_signing(data):
         # Request data
         request_data = request.form.to_dict()
-
+        # Query the user
+        user = Score.query.filter_by(username=request_data["user_name"]).first()
+        if not user:
+            user = Score(request_data["user_name"], 0)
+            db.session.add(user)
+        else:
+            pass
         # Extract the user item
         player_choice = request_data["text"].split(" ")
 
@@ -132,10 +138,15 @@ def rsp() -> None:
             elif game.gheorghe_choice in game.calculate():
                 text = f"I won! My choice was: {game.gheorghe_choice}"
                 response = {"response_type": "in_channel", "text": text}
+                gheorghe_user = Score.query.filter_by(username="gheorghe").first()
+                gheorghe_user.score += 1
+                db.session.commit()
                 return make_response(json.dumps(response), 200, content_type)
             else:
                 text = f"You won! My choice was: {game.gheorghe_choice}"
                 response = {"response_type": "in_channel", "text": text}
+                user.score += 1
+                db.session.commit()
                 return make_response(json.dumps(response), 200, content_type)
     return make_response("Error!", 200, content_type)
 
@@ -155,6 +166,34 @@ def rsp_items() -> None:
             "5. *Snake*, *Scissors*, *Fire*",
         ]
         message = "\n".join(items)
+        response_url = request.form.to_dict()["response_url"]
+        response = {
+            "response_type": "in_channel",
+            "text": message,
+            "response_url": response_url,
+        }
+        response_to_be_sent = json.dumps(response)
+        return make_response(response_to_be_sent, 200, content_type)
+    return make_response("Error!", 200, content_type)
+
+
+@BOT_APP.route("/slack/score", methods=["POST"])
+def rsp_score() -> None:
+    """ RSP score board """
+    data = request.get_data(as_text=True)
+    content_type = {"Content-Type": "application/json"}
+
+    if verify_signing(data):
+
+        # Query first 10 players
+        scores = Score.query.all()
+        scores.sort(reverse=True)
+
+        top_10_players = []
+        for counter, player in enumerate(scores[0:10], 1):
+            top_10_players.append(f"*{counter} {player.username} = {player.score}*")
+
+        message = "\n".join(top_10_players)
         response_url = request.form.to_dict()["response_url"]
         response = {
             "response_type": "in_channel",

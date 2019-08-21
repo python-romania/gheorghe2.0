@@ -16,7 +16,7 @@ from flask_migrate import Migrate
 # Setup database
 db = SQLAlchemy()
 
-def create_app(development: bool = True) -> Flask:
+def create_app(development=False) -> Flask:
     """ Application factory """
     flask_app = Flask(__name__)
     
