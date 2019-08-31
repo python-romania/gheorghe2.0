@@ -16,3 +16,10 @@ Gheorghe2.0 is build usig flask and Slack Events API, where the previous verison
 using Slack RMT API.
 
 ![gheorghe](static/gheorghe.png)
+
+## Rock-Paper-Scissors 
+
+Wanna play? Gheorghe is ready to play with you Rock-Paper-Scissors. This is a small game implemented using 
+slack commands.
+
+![game](https://cl.ly/0e5ed9919291/%255B7fbe5c624d58d50f4d735edafb95c04a%255D_gheorghe2.0.png)
