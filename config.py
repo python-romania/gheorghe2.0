@@ -32,6 +32,14 @@ class ProductionConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = DB_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = True 
 
+class TestConfig(BaseConfig):
+    """
+    Test settings. Holds additional settings for
+    test environment.
+    """
+    DEBUG = True
+    
+
 
 # Development configuration
 class DevelopmentConfig(BaseConfig):

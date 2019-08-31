@@ -21,7 +21,7 @@ def driver_fixture() -> webdriver.Chrome():
     driver = webdriver.Chrome(chrome_options=opts)
     driver.get("http://localhost:5000/")
     yield driver
-    driver.close()
+    driver.quit()
 
 
 def test_website_title(driver_fixture: webdriver.Chrome) -> None:

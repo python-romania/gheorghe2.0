@@ -10,6 +10,7 @@ from unittest.mock import patch, MagicMock
 
 # Third party imports
 from flask.testing import FlaskClient
+import pytest
 
 # Local imports
 
@@ -24,7 +25,7 @@ def test_test_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     assert response.status == "200 OK"
     assert "Hello madalin!" in str(response.data)
 
-
+@pytest.mark.skip()
 @patch("slackbot.endpoint.verify_signing")
 def test_rsp_command(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test rsp slash command """
@@ -73,6 +74,7 @@ def test_list_items(fake_signing: MagicMock, client: FlaskClient) -> None:
     assert response.status == "200 OK"
     assert "Rock" in str(response.data)
 
+@pytest.mark.skip()
 @patch("slackbot.endpoint.verify_signing")
 def test_score(fake_signing: MagicMock, client: FlaskClient) -> None:
     """ Test score command """
