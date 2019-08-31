@@ -1,9 +1,5 @@
 [![Build Status](https://travis-ci.org/python-romania/gheorghe2.0.svg?branch=master)](https://travis-ci.org/python-romania/gheorghe2.0) ![GitHub](https://img.shields.io/github/license/python-romania/website)
 
-<p align="center">
-  <img width="460" height="300" src="https://cl.ly/6b12efa804de/Image%2525202019-08-31%252520at%25252011.20.45%252520AM.png">
-</p>
-
 # Pyton Romania Study Group
 
 Welcome to the Python Study Group community!
