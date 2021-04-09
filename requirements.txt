@@ -1,4 +1,4 @@
-aiohttp==3.5.4
+aiohttp==3.7.4
 alembic==1.0.11
 appdirs==1.4.3
 appnope==0.1.0
