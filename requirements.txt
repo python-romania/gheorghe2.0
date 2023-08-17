@@ -16,7 +16,7 @@ coverage==4.5.4
 decorator==4.4.0
 defusedxml==0.6.0
 entrypoints==0.3
-Flask==1.1.1
+Flask==2.2.5
 Flask-Migrate==2.5.2
 Flask-SQLAlchemy==2.4.0
 gunicorn==19.9.0
